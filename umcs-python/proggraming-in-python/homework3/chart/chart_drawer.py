@@ -27,7 +27,7 @@ class ChartDrawer:
         """
         with open(self.csv_file, mode="r") as csvfile:
             csv_reader = csv.reader(csvfile)
-            next(csv_reader)  # Skip the header
+            next(csv_reader)
             for row in csv_reader:
                 self.data.append((int(row[0]), float(row[1])))
 
@@ -43,10 +43,8 @@ class ChartDrawer:
                 "No data available. Please load data from a CSV file first."
             )
 
-        # Extract lengths and times
         lengths, times = zip(*self.data)
 
-        # Plot the data
         plt.figure(figsize=(8, 6))
         plt.plot(lengths, times, marker="o", label="Cracking Time")
         plt.title("Average Cracking Time vs Password Length")
@@ -55,7 +53,6 @@ class ChartDrawer:
         plt.grid(True)
         plt.legend()
 
-        # Prompt user to save chart
         save_chart = input("Do you want to save the chart? (Y/N): ").strip().lower()
         if save_chart == "y":
             plt.tight_layout()

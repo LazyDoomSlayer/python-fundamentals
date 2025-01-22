@@ -26,14 +26,13 @@ class CharsetSetSelector:
         Returns:
             str: The selected character set.
         """
-        current_selection = 0  # Tracks the currently selected option
+        current_selection = 0
 
         while True:
             stdscr.clear()
             stdscr.addstr("Select a character set:\n", curses.A_BOLD)
             stdscr.addstr("Use UP/DOWN to navigate and ENTER to select.\n\n")
 
-            # Render the menu options
             for idx, charset in enumerate(self.charsets):
                 if idx == current_selection:
                     stdscr.addstr(f"> {charset}\n", curses.A_REVERSE)
@@ -42,16 +41,15 @@ class CharsetSetSelector:
 
             stdscr.refresh()
 
-            # Handle user input
             key = stdscr.getch()
             if key == curses.KEY_UP and current_selection > 0:
                 current_selection -= 1
             elif key == curses.KEY_DOWN and current_selection < len(self.charsets) - 1:
                 current_selection += 1
-            elif key in [curses.KEY_ENTER, 10, 13]:  # Enter key
+            elif key in [curses.KEY_ENTER, 10, 13]:
                 return self.charsets[
                     current_selection
-                ]  # Return the selected character set
+                ]
 
     def fallback_menu(self) -> str:
         """

@@ -101,7 +101,6 @@ class PasswordCracker:
         return user_input_max_length, user_input_runs, user_input_selected_character_set
 
 
-# Main execution
 if __name__ == "__main__":
     csv_file_name = "cracking_times.csv"
     chart_image_name = "cracking_times_chart.png"
