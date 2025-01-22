@@ -1,7 +1,7 @@
 import curses
 import string
 
-from menu import CharacterSet
+from menu.charset_set import CharacterSet
 
 
 class CharsetSetSelector:

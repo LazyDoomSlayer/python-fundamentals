@@ -3,6 +3,7 @@ import itertools
 import time
 from typing import List, Tuple
 
+from chart import ChartDrawer
 from menu import CharsetSetSelector
 
 
@@ -97,12 +98,19 @@ class PasswordCracker:
         user_input_selector = CharsetSetSelector()
         user_input_selected_character_set = user_input_selector.get_selection()
 
-        return max_length, runs, character_set
+        return user_input_max_length, user_input_runs, user_input_selected_character_set
 
 
 # Main execution
 if __name__ == "__main__":
+    csv_file_name = "cracking_times.csv"
+    chart_image_name = "cracking_times_chart.png"
+
     cracker = PasswordCracker()
     max_length, runs, character_set = cracker.get_user_input()
     cracker.measure_cracking_time(character_set, max_length, runs)
-    cracker.save_times_to_csv("cracking_times.csv")
+    cracker.save_times_to_csv(csv_file_name)
+
+    drawer = ChartDrawer(csv_file=csv_file_name)
+    drawer.load_data_from_csv()
+    drawer.draw_and_save_chart(output_file=chart_image_name)
