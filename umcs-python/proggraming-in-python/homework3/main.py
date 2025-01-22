@@ -4,7 +4,7 @@ import time
 from typing import List, Tuple
 
 from chart import ChartDrawer
-from menu import CharsetSetSelector
+from menu import CharsetSetSelector, CharacterSet
 
 
 class PasswordCracker:
@@ -36,8 +36,8 @@ class PasswordCracker:
         """
         for combination in itertools.product(character_set, repeat=length):
             password = "".join(combination)
-            print(combination)
-            print(password)
+            # print(combination)
+            # print(password)
 
     def measure_cracking_time(
         self, character_set: str, max_length: int, runs: int
@@ -85,12 +85,12 @@ class PasswordCracker:
             csv_writer.writerows(self.times)
         print(f"Times saved to {filename}")
 
-    def get_user_input(self) -> Tuple[int, int, str]:
+    def get_user_input(self) -> Tuple[int, int, CharacterSet]:
         """
         Get user input for the maximum password length, the number of runs, and character set selection.
 
         Returns:
-            Tuple[int, int, str]: Maximum password length, number of runs, and selected character set.
+            Tuple[int, int, CharacterSet]: Maximum password length, number of runs, and selected character set.
         """
         user_input_max_length = int(input("Enter the maximum password length: "))
         user_input_runs = int(input("Enter the number of runs for better accuracy: "))
@@ -107,9 +107,11 @@ if __name__ == "__main__":
 
     cracker = PasswordCracker()
     max_length, runs, character_set = cracker.get_user_input()
-    cracker.measure_cracking_time(character_set, max_length, runs)
+
+    cracker.measure_cracking_time(character_set.value[0], max_length, runs)
     cracker.save_times_to_csv(csv_file_name)
 
+    title = (f"Average Cracking Time for {character_set.value[0]} vs Password Length",)
     drawer = ChartDrawer(csv_file=csv_file_name)
     drawer.load_data_from_csv()
-    drawer.draw_and_save_chart(output_file=chart_image_name)
+    drawer.draw_and_save_chart(output_file=chart_image_name, title=title)

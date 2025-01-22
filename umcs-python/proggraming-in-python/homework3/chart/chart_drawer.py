@@ -31,7 +31,11 @@ class ChartDrawer:
             for row in csv_reader:
                 self.data.append((int(row[0]), float(row[1])))
 
-    def draw_and_save_chart(self, output_file: str = "chart.png") -> None:
+    def draw_and_save_chart(
+        self,
+        output_file: str = "chart.png",
+        title="Average Cracking Time vs Password Length",
+    ) -> None:
         """
         Draw the chart from the loaded data and save it as a PNG file.
 
@@ -47,7 +51,7 @@ class ChartDrawer:
 
         plt.figure(figsize=(8, 6))
         plt.plot(lengths, times, marker="o", label="Cracking Time")
-        plt.title("Average Cracking Time vs Password Length")
+        plt.title(title)
         plt.xlabel("Password Length")
         plt.ylabel("Average Time (s)")
         plt.grid(True)

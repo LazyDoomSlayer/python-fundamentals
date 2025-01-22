@@ -1,5 +1,4 @@
 import curses
-import string
 
 from menu.charset_set import CharacterSet
 
@@ -47,9 +46,7 @@ class CharsetSetSelector:
             elif key == curses.KEY_DOWN and current_selection < len(self.charsets) - 1:
                 current_selection += 1
             elif key in [curses.KEY_ENTER, 10, 13]:
-                return self.charsets[
-                    current_selection
-                ]
+                return self.charsets[current_selection]
 
     def fallback_menu(self) -> str:
         """
@@ -65,12 +62,12 @@ class CharsetSetSelector:
         choice = input("Enter the number of your choice: ").strip()
         return self.charsets[int(choice) - 1]
 
-    def get_selection(self) -> str:
+    def get_selection(self) -> CharacterSet:
         """
         Displays the character set selection menu, falling back to text-based if curses fails.
 
         Returns:
-            str: The selected character set.
+            CharacterSet: The selected character set.
         """
         try:
             selected_option = curses.wrapper(self.curses_menu)
@@ -79,5 +76,8 @@ class CharsetSetSelector:
 
         charset_enum = CharacterSet.get_by_name(selected_option)
         if charset_enum == CharacterSet.CUSTOM:
-            return input("Enter your custom character set: ")
-        return charset_enum.value[1] if charset_enum else string.digits
+            custom_value = input("Enter your custom character set: ")
+            charset_enum = CharacterSet.CUSTOM
+            charset_enum.value = ("Custom Character Set", custom_value)
+
+        return charset_enum if charset_enum else CharacterSet.DIGITS
