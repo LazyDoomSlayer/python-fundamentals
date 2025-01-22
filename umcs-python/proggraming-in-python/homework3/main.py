@@ -111,7 +111,7 @@ if __name__ == "__main__":
     cracker.measure_cracking_time(character_set.value[0], max_length, runs)
     cracker.save_times_to_csv(csv_file_name)
 
-    title = (f"Average Cracking Time for {character_set.value[0]} vs Password Length",)
+    title = f"Average Cracking Time for {character_set.value[0]} vs Password Length"
     drawer = ChartDrawer(csv_file=csv_file_name)
     drawer.load_data_from_csv()
     drawer.draw_and_save_chart(output_file=chart_image_name, title=title)
